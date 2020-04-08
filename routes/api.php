@@ -23,3 +23,5 @@ Route::get('country','Country\Countrycontroller@country');
 Route::get('country/{id}','Country\Countrycontroller@getid');
 
 Route::post('country','Country\Countrycontroller@insert');
+
+Route::put('country/{country}','Country\Countrycontroller@insertrec');
