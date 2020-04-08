@@ -25,3 +25,5 @@ Route::get('country/{id}','Country\Countrycontroller@getid');
 Route::post('country','Country\Countrycontroller@insert');
 
 Route::put('country/{country}','Country\Countrycontroller@insertrec');
+
+Route::delete('country/{deletecode}','Country\Countrycontroller@deleterec');

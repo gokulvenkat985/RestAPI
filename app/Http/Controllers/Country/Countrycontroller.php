@@ -20,16 +20,14 @@ class Countrycontroller extends Controller
  		$country=CountryModel::create($request->all());
  		return response()->json($country,201);
  	}
- 	public function insertrec(Request $request,$country){
- 		// $country->update($request->all());
- 		// return response()->json($country,200);
-		// return response()->json($request->get());
-
-    // $sample = Sample::find($id);
-    
+ 	public function insertrec(Request $request,$country){    
 		$user = CountryModel::find($country);
 		$user->update($request->all());
 		$user = CountryModel::find($country);
 		return response()->json($user); 		 
+ 	}
+ 	public function deleterec(Request $request,$deletecode){
+ 		$res=CountryModel::where('id',$deletecode)->delete();
+ 		return response()->json($res,401);
  	}
 }
