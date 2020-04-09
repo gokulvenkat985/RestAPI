@@ -40,7 +40,15 @@ class Countrycontroller extends Controller
 		 		 
  	}
  	public function deleterec(Request $request,$deletecode){
- 		$res=CountryModel::where('id',$deletecode)->delete();
- 		return response()->json($res,401);
+ 		$check=CountryModel::find($deletecode);
+ 		if($check){
+ 			
+ 			$res=CountryModel::where('id',$deletecode)->delete();
+ 		return response()->json($res,401);	
+ 		}
+ 		else{
+ 		return "Record not found";
+ 		}
+ 		
  	}
 }
