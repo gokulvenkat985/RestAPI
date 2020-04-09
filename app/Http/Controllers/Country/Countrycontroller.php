@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\CountryModel;
 use DB;
+use Illuminate\Support\Facades\Validator;
+
 
 class Countrycontroller extends Controller
 {
@@ -16,21 +18,32 @@ class Countrycontroller extends Controller
  	public function getid($id){
  		$check=CountryModel::find($id);
  		if(is_null($check)){
- 			return "record not found";
- 		}
+ 		return response()->json(["message"=>"Record not found"],404); 		}
  		else{
  			return response()->json(CountryModel::find($id),200);
  		}
  		
  	}
  	public function insert(Request $request){
- 		$country=CountryModel::create($request->all());
- 		return response()->json($country,201);
+ 		$rules=[
+ 			'name'=>'required',
+ 			'iso'=>'required'
+ 		];
+ 		$validator=validator::make($request->all(),$rules);		
+if($validator->fails())
+{
+ 	return response()->json($validator->errors(),400);
+}
+else{
+	$country=CountryModel::create($request->all());
+	return response()->json($country,201);	
+}
+ 		
  	}
  	public function insertrec(Request $request,$country){
 		$user = CountryModel::find($country);
 		if(is_null($user)){
-		return "record not found";
+		return response()->json(["message"=>"Record not found"],404);
 		}
 		else{
 		$user->update($request->all());
@@ -43,11 +56,11 @@ class Countrycontroller extends Controller
  		$check=CountryModel::find($deletecode);
  		if($check){
  			
- 			$res=CountryModel::where('id',$deletecode)->delete();
+ 		$res=CountryModel::where('id',$deletecode)->delete();
  		return response()->json($res,401);	
  		}
  		else{
- 		return "Record not found";
+ 		return response()->json(["message"=>"Record not found"],404);
  		}
  		
  	}
